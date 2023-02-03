@@ -1,41 +1,30 @@
 import React, { useState } from "react";
 
-function RecipeCreate({ createRecipe }) {
-
-  const [name, setName] = useState('');
-  const [cuisine, setCuisine] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [ingredients, setIngredients] = useState('');
-  const [preparation, setPreparation] = useState('');
-
-  // TODO: When the form is submitted, a new recipe should be created, and the form contents cleared.
-  // TODO: Add the required input and textarea form elements.
-  // TODO: Add the required submit and change handlers
-
-  const handleNameChange = (event) => setName(event.target.value);
-  const handleCuisineChange = (event) => setCuisine(event.target.value);
-  const handlePhotoUrlChange = (event) => setPhotoUrl(event.target.value);
-  const handleIngredientsChange = (event) => setIngredients(event.target.value);
-  const handlePreparationChange = (event) => setPreparation(event.target.value);
-
-  const newRecipe = {
-    name: name,
-    cuisine: cuisine,
-    photo: photoUrl,
-    ingredients: ingredients,
-    preparation: preparation,
-  }
-
+function RecipeCreate({createRecipe}) { 
+  
+  const initialFormState = {
+    name: "",
+    cuisine: "",
+    photo: "",
+    ingredients: "",
+    preparation: "",
+  };
+  
+  const [formData, setFormData] = useState({ ...initialFormState });
+  
+  const handleChange = ({ target }) => {  
+    const value = target.value;
+    setFormData({
+      ...formData,
+      [target.name]: value,
+    });
+  };
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    createRecipe(newRecipe);
-
-    setName('');
-    setCuisine('');
-    setPhotoUrl('');
-    setIngredients('');
-    setPreparation('');
-  }
+    createRecipe(formData);  
+    setFormData({ ...initialFormState });
+  };
   
   return (
     <form name="create" onSubmit={handleSubmit}>
@@ -43,57 +32,64 @@ function RecipeCreate({ createRecipe }) {
         <tbody>
           <tr>
             <td>
-              <label htmlFor="name"/>
-              <input 
+              <label htmlFor="name">
+              <input
                 id="name"
                 type="text"
                 name="name"
                 placeholder="Name"
-                onChange={handleNameChange}
-                value={name}
+                onChange={handleChange}
+                value={formData.name}
               />
+              </label>
             </td>
             <td>
-              <label htmlFor="cuisine"/>
+              <label htmlFor="cuisine">
               <input
                 id="cuisine"
                 type="text"
                 name="cuisine"
                 placeholder="Cuisine"
-                onChange={handleCuisineChange}
-                value={cuisine}
+                onChange={handleChange}
+                value={formData.cuisine}
               />
+              </label>
             </td>
             <td>
-              <label htmlFor="photo"/>
+              <label htmlFor="photo">
               <input
-               id="photo"
-               type="text"
-               name="photo"
-               placeholder="URL"
-               onChange={handlePhotoUrlChange}
-               value={photoUrl}
+                id="photo"
+                type="text"
+                name="photo"
+                placeholder="URL"
+                onChange={handleChange}
+                value={formData.photo}
               />
+              </label>
             </td>
             <td>
-              <label htmlFor="ingredients"/>
+              <label htmlFor="ingredients">
               <textarea
                 id="ingredients"
+                type="text"
                 name="ingredients"
                 placeholder="Ingredients"
-                onChange={handleIngredientsChange}
-                value={ingredients}
+                onChange={handleChange}
+                value={formData.ingredients}
               />
+              </label>
             </td>
             <td>
-              <label htmlFor="preparations"/>
-              <textarea 
-                id="preparations"
-                name="preparations"
-                placeholder="Preparations"
-                onChange={handlePreparationChange}
-                value={preparation}
+              <label htmlFor="preparation">
+              <textarea
+                id="preparation"
+                type="text"
+                name="preparation"
+                placeholder="Preparation"
+                onChange={handleChange}
+                value={formData.preparation}
               />
+              </label>
             </td>
             <td>
               <button type="submit">Create</button>
@@ -104,5 +100,8 @@ function RecipeCreate({ createRecipe }) {
     </form>
   );
 }
+
+  // ADDED: Add the required input and textarea form elements.
+
 
 export default RecipeCreate;
