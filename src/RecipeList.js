@@ -11,7 +11,7 @@ function RecipeList({ recipes, deleteRecipe }) {
       <td>{name}</td>
       <td>{cuisine}</td>
       <td>
-        <img src={photo} width="100" height="100"/>
+        <img src={photo} className="scale-down"/>
       </td>
       <td className="content_td"><p>{(ingredients)}</p></td>
       <td className="content_td"><p>{(preparation)}</p></td>
